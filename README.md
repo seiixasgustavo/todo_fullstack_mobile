@@ -6,5 +6,9 @@ The technologies used are: Flutter, Golang, MySQL and React.
 
 ## Some Screenshots of the App
 
+Login Page                      |  Main Page
+:------------------------------:|:------------------------------:
+![](screenshots/loginpage.png)  |  ![](screenshots/mainpage.png)
+
 ![](screenshots/loginpage.png)
 ![](screenshots/mainpage.png)
