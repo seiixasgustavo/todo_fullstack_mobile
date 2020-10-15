@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ActionButton extends StatelessWidget {
   ActionButton({@required this.text, @required this.onPressed});
@@ -28,6 +29,35 @@ class ActionButton extends StatelessWidget {
   }
 }
 
+class ActionButtonWithIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      color: Colors.blueAccent,
+      onPressed: () {},
+      child: Container(
+        width: 200,
+        height: 45,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              FontAwesomeIcons.solidEnvelope,
+              color: Colors.white,
+              size: 20.0,
+            ),
+            SizedBox(width: 10),
+            Text(
+              "Sign In with Email",
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class SignInGoogleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,7 +65,7 @@ class SignInGoogleButton extends StatelessWidget {
       borderSide: BorderSide(color: Colors.blueAccent),
       onPressed: () {},
       child: Container(
-        width: 180,
+        width: 200,
         height: 45,
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -47,6 +77,34 @@ class SignInGoogleButton extends StatelessWidget {
             SizedBox(width: 10),
             Text(
               "Sign In with Google",
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SignInFacebookButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return OutlineButton(
+      borderSide: BorderSide(color: Colors.blueAccent),
+      onPressed: () {},
+      child: Container(
+        width: 200,
+        height: 45,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              FontAwesomeIcons.facebookF,
+              size: 20.0,
+            ),
+            SizedBox(width: 10),
+            Text(
+              "Continue with Facebook",
               style: TextStyle(color: Colors.white),
             ),
           ],

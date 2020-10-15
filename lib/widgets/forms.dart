@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_mobile_fullstack/providers/auth.dart';
+import 'package:todo_mobile_fullstack/providers/todos.dart';
 import 'package:todo_mobile_fullstack/utils/http_exception.dart';
 import 'package:todo_mobile_fullstack/widgets/buttons.dart';
 import 'package:todo_mobile_fullstack/widgets/dialogs.dart';
@@ -54,15 +55,15 @@ class _SignInSignUpFormState extends State<SignInSignUpForm> {
 
     try {
       await Provider.of<Auth>(context, listen: false).login(email, password);
+      await Provider.of<Todos>(context, listen: false).getAllTodos();
       widget.loggedIn();
-    } on HttpException catch (e) {
+    } on HttpException catch (_) {
       var errorMessage = 'Authentication Failed';
       showErrorDialog(context, errorMessage);
-    } catch (e) {
+    } catch (_) {
       const errorMessage = 'Could not authenticate you. Please try again later';
       showErrorDialog(context, errorMessage);
     }
-
     setState(() {
       _isLoading = false;
     });

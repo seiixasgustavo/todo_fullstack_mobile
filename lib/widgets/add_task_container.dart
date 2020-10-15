@@ -43,6 +43,15 @@ class _AddTaskContainerState extends State<AddTaskContainer> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           TextField(
+            textInputAction: TextInputAction.done,
+            onSubmitted: (value) {
+              Provider.of<Todos>(context, listen: false).addTodo(Todo(
+                text: newTaskTitle,
+                isCompleted: false,
+                due: selectedDate,
+              ));
+              Navigator.pop(context);
+            },
             decoration: InputDecoration(
               hintText: 'What is your task?',
               border: InputBorder.none,

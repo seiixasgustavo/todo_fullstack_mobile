@@ -69,4 +69,10 @@ class Auth with ChangeNotifier {
       throw e;
     }
   }
+
+  Future<void> logout() async {
+    _token = null;
+    _expiryDate = null;
+    _user = null;
+  }
 }

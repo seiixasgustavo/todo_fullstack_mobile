@@ -4,6 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:todo_mobile_fullstack/providers/auth.dart' show Auth;
+import 'package:todo_mobile_fullstack/providers/todos.dart';
+import 'package:todo_mobile_fullstack/screens/login_page.dart';
+import 'package:todo_mobile_fullstack/utils/url.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DrawerContent extends StatelessWidget {
   @override
@@ -52,18 +56,19 @@ class DrawerContent extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Container(
+              padding: EdgeInsets.only(top: 10.0),
               child: ListView(
                 children: [
                   ListTileWithIcon(
                     icon: FontAwesomeIcons.solidBell,
                     text: 'Notifications',
-                    iconColor: Colors.lightBlue,
+                    iconColor: Colors.blueAccent,
                     onPressed: () {},
                   ),
                   Divider(),
                   ListTileWithIcon(
                     icon: FontAwesomeIcons.solidUser,
-                    text: 'User Info',
+                    text: 'User',
                     iconColor: Colors.deepOrange[400],
                     haveTrailing: true,
                     onPressed: () {},
@@ -75,32 +80,42 @@ class DrawerContent extends StatelessWidget {
                     haveTrailing: true,
                     onPressed: () {},
                   ),
-                  ListTileWithIcon(
-                    icon: FontAwesomeIcons.info,
-                    text: "Info",
-                    iconColor: Colors.yellow[600],
-                    haveTrailing: true,
-                    onPressed: () {},
-                  ),
                   Divider(),
                   ListTileWithIcon(
                     icon: FontAwesomeIcons.github,
                     text: 'Github',
                     iconColor: Colors.blueGrey[700],
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await canLaunch(kGithubUrl)) {
+                        await launch(kGithubUrl);
+                      } else {
+                        throw 'Could not launch $kGithubUrl';
+                      }
+                    },
                   ),
                   ListTileWithIcon(
                     icon: FontAwesomeIcons.linkedin,
                     text: 'Linkedin',
                     iconColor: Colors.blueGrey,
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (await canLaunch(kLinkedinURL)) {
+                        await launch(kLinkedinURL);
+                      } else {
+                        throw 'Could not launch $kLinkedinURL';
+                      }
+                    },
                   ),
                   Divider(),
                   ListTileWithIcon(
                     icon: FontAwesomeIcons.signOutAlt,
                     text: "Sign Out",
                     iconColor: Colors.red[500],
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Auth>(context, listen: false).logout();
+                      Provider.of<Todos>(context, listen: false).logout();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/login-page', (route) => false);
+                    },
                   ),
                 ],
               ),

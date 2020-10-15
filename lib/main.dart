@@ -15,10 +15,26 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Auth>(create: (context) => Auth()),
         ChangeNotifierProvider<Todos>(create: (context) => Todos()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        home: LoginPage(),
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(ctx);
+
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            routes: {
+              LoginPage.routeName: (ctx) => LoginPage(),
+              MainPage.routeName: (ctx) => MainPage(),
+            },
+            theme: ThemeData.dark(),
+            home: auth.isAuth ? MainPage() : LoginPage(),
+          ),
+        ),
       ),
     );
   }

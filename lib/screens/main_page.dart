@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:todo_mobile_fullstack/providers/todos.dart';
 import 'package:todo_mobile_fullstack/utils/constants.dart';
 import 'package:todo_mobile_fullstack/widgets/add_task_container.dart';
 import 'package:todo_mobile_fullstack/widgets/drawer.dart';
+import 'package:todo_mobile_fullstack/widgets/todo_list.dart';
 
 class MainPage extends StatefulWidget {
+  static const routeName = '/main-page';
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -125,28 +129,34 @@ class _MainPageState extends State<MainPage> {
           size: 24.0,
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(height: 100),
-          Container(
-            height: 250.0,
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: SvgPicture.asset("images/empty.svg"),
-          ),
-          SizedBox(height: 20),
-          Text(
-            "You have a free day!",
-            style: TextStyle(fontSize: 18.0),
-          ),
-          SizedBox(height: 5),
-          Text(
-            "Add more tasks by pressing the floating button!",
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      ),
+      body: Provider.of<Todos>(context).todosCount(
+                  '${_selectedDay.year}-${_selectedDay.month}-${_selectedDay.day}') ==
+              0
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 100),
+                Container(
+                  height: 250.0,
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: SvgPicture.asset("images/empty.svg"),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "You have a free day!",
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "Add more tasks by pressing the floating button!",
+                  style: TextStyle(color: Colors.grey),
+                )
+              ],
+            )
+          : TodoList(
+              selectedTime: _selectedDay,
+            ),
     );
   }
 }
